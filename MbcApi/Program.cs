@@ -1,4 +1,5 @@
 using MbcApi.Core.DbContext;
+using MbcApi.Helpers;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -13,6 +14,8 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+//inject helper class
+builder.Services.AddScoped<JwtTokenHelper>();
 
 //Ad Db
 builder.Services.AddDbContext<ApplicationDbContext>(option =>
