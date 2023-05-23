@@ -25,7 +25,7 @@ namespace MbcApi.Controllers
         }
 
         [HttpPost]
-        [Route("seeds-roles")]
+        [Route("SeedsRoles")]
         public async Task<IActionResult> SeedsRole()
         {
             bool isUserRoleExist = await _roleManager.RoleExistsAsync(StaticUserRoles.USER);
@@ -105,6 +105,39 @@ namespace MbcApi.Controllers
 
             var token = _jwtTokenHelper.GenerateJwtToken(claims);
             return Ok(token);
+        }
+
+        [HttpPost]
+        [Route("MakeAdmin")]
+        public async Task<IActionResult> MakeAdmin(UpdatePermissionDto updatePermissionDto)
+        {
+            var user = await _userManager.FindByNameAsync(updatePermissionDto.UserName);
+            if (user is null)
+                return BadRequest("Invalid Username");
+            await _userManager.AddToRoleAsync(user, StaticUserRoles.ADMIN);
+            return Ok("Now its Admin");
+        }
+
+        [HttpPost]
+        [Route("MakeOwner")]
+        public async Task<IActionResult> MakeOwner(UpdatePermissionDto updatePermissionDto)
+        {
+            var user = await _userManager.FindByNameAsync(updatePermissionDto.UserName);
+            if (user is null)
+                return BadRequest("Invalid Username");
+            await _userManager.AddToRoleAsync(user, StaticUserRoles.OWNER);
+            return Ok("Now its Owner");
+        }
+
+        [HttpPost]
+        [Route("MakeUser")]
+        public async Task<IActionResult> MakeUser(UpdatePermissionDto updatePermissionDto)
+        {
+            var user = await _userManager.FindByNameAsync(updatePermissionDto.UserName);
+            if (user is null)
+                return BadRequest("Invalid Username");
+            await _userManager.AddToRoleAsync(user, StaticUserRoles.USER);
+            return Ok("Now its User");
         }
     }
 }
