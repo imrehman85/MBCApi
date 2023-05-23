@@ -1,4 +1,5 @@
 ﻿using MbcApi.Core.Dtos;
+using MbcApi.Core.Entities;
 using MbcApi.Core.OtherObjects;
 using MbcApi.Helpers;
 using Microsoft.AspNetCore.Identity;
@@ -11,12 +12,12 @@ namespace MbcApi.Controllers
     [Route("[controller]")]
     public class AuthController : ControllerBase
     {
-        private readonly UserManager<IdentityUser> _userManager;
+        private readonly UserManager<ApplicationUser> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
         private readonly IConfiguration _configuration;
         private JwtTokenHelper _jwtTokenHelper;
 
-        public AuthController(UserManager<IdentityUser> userManager, RoleManager<IdentityRole> roleManager, IConfiguration configuration, JwtTokenHelper jwtTokenHelper)
+        public AuthController(UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager, IConfiguration configuration, JwtTokenHelper jwtTokenHelper)
         {
             _userManager = userManager;
             _roleManager = roleManager;
@@ -49,8 +50,10 @@ namespace MbcApi.Controllers
             var isUserExist = await _userManager.FindByNameAsync(registerDto.UserName);
             if (isUserExist != null)
                 return BadRequest("User is already exist!");
-            IdentityUser NewUser = new IdentityUser
+            ApplicationUser NewUser = new ApplicationUser
             {
+                FirstName=registerDto.FirstName,
+                LastName=registerDto.LastName,
                 UserName = registerDto.UserName,
                 Email = registerDto.Email,
                 SecurityStamp=Guid.NewGuid().ToString()
@@ -93,6 +96,8 @@ namespace MbcApi.Controllers
 
             var claims = new List<Claim>
             {
+                new Claim("FirstName", user.FirstName),
+                new Claim("LastName", user.LastName),
                 new Claim(ClaimTypes.Name, user.UserName),
                 new Claim(ClaimTypes.NameIdentifier, user.Id),
                 new Claim("JWTID", Guid.NewGuid().ToString())

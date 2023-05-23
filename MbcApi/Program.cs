@@ -1,4 +1,5 @@
 using MbcApi.Core.DbContext;
+using MbcApi.Core.Entities;
 using MbcApi.Helpers;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
@@ -26,7 +27,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(option =>
 
 //add Identity
 
-builder.Services.AddIdentity<IdentityUser, IdentityRole>()
+builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
     .AddEntityFrameworkStores<ApplicationDbContext>()
     .AddDefaultTokenProviders();
 
