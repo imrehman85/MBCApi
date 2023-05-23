@@ -1,3 +1,5 @@
+using MbcApi.Core.OtherObjects;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MbcApi.Controllers
@@ -17,8 +19,25 @@ namespace MbcApi.Controllers
         }
 
         [HttpGet]
-        [Route("Get")]
-        public IActionResult Get()
+        [Route("GetByAdmin")]
+        [Authorize(Roles =StaticUserRoles.ADMIN)]
+        public IActionResult Get1()
+        {
+            return Ok(Summaries);
+        }
+
+        [HttpGet]
+        [Route("GetByUser")]
+        [Authorize(Roles = StaticUserRoles.USER)]
+        public IActionResult Get2()
+        {
+            return Ok(Summaries);
+        }
+
+        [HttpGet]
+        [Route("GetByOwner")]
+        [Authorize(Roles = StaticUserRoles.OWNER)]
+        public IActionResult Get3()
         {
             return Ok(Summaries);
         }
