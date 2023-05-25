@@ -1,9 +1,7 @@
 ﻿namespace MbcApi.Core.Entities
 {
-    public class Rooms
+    public class Rooms : SuperEntity
     {
-        public string RoomId { get; set; } 
-
         public string RoomNumber { get; set; }
 
         public string Floor { get; set; }

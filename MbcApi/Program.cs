@@ -1,6 +1,7 @@
 using MbcApi.Core.DbContext;
 using MbcApi.Core.Entities;
 using MbcApi.Core.Interfaces;
+using MbcApi.Core.Repository;
 using MbcApi.Core.Services;
 using MbcApi.Helpers;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -20,6 +21,8 @@ builder.Services.AddSwaggerGen();
 //inject helper class
 builder.Services.AddScoped<JwtTokenHelper>();
 builder.Services.AddScoped<IAuthService, AuthService>();
+builder.Services.AddScoped<IUnitOfWork, UnitOfWorkRepsitory>();
+builder.Services.AddScoped<IRoomRepo, RoomRepo>();
 
 //Ad Db
 builder.Services.AddDbContext<ApplicationDbContext>(option =>
