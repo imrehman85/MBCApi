@@ -51,14 +51,14 @@ namespace MbcApi.Core.Services
             {
                 new Claim("FirstName", user.FirstName),
                 new Claim("LastName", user.LastName),
-                new Claim(ClaimTypes.Name, user.UserName),
-                new Claim(ClaimTypes.NameIdentifier, user.Id),
+                new Claim("UserName", user.UserName),
+                new Claim("UserId", user.Id),
                 new Claim("JWTID", Guid.NewGuid().ToString())
             };
 
             foreach (var role in userRole)
             {
-                claims.Add(new Claim(ClaimTypes.Role, role));
+                claims.Add(new Claim("UserRole", role));
             }
 
             var token = _jwtTokenHelper.GenerateJwtToken(claims);

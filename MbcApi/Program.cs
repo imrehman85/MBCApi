@@ -23,6 +23,7 @@ builder.Services.AddScoped<JwtTokenHelper>();
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IUnitOfWork, UnitOfWorkRepsitory>();
 builder.Services.AddScoped<IRoomRepo, RoomRepo>();
+builder.Services.AddScoped<IUsersList, UsersList>();
 
 //Ad Db
 builder.Services.AddDbContext<ApplicationDbContext>(option =>
@@ -71,6 +72,15 @@ builder.Services
         };
     });
 
+builder.Services.AddCors(option =>
+{
+    option.AddPolicy("MyPolicy", builder =>
+    {
+        builder.AllowAnyOrigin()
+        .AllowAnyMethod()
+        .AllowAnyHeader();
+    });
+});
 
 
 
@@ -82,6 +92,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.UseCors("MyPolicy");
 
 app.UseHttpsRedirection();
 

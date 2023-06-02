@@ -11,9 +11,12 @@ namespace MbcApi.Core.Repository
         {
             _dbContext = dbContext;
             roomRepo = new RoomRepo(_dbContext);
+            usersList = new UsersList(_dbContext);
         }
 
         public IRoomRepo roomRepo { get; set; }
+
+        public IUsersList usersList { get; set; }
 
         public int Complete()
         {

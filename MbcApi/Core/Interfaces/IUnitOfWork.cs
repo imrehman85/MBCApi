@@ -4,6 +4,8 @@
     {
         public IRoomRepo roomRepo { get; set; }
 
+        public IUsersList usersList { get; set; }
+
         int Complete();
     }
 }
