@@ -9,5 +9,7 @@ namespace MbcApi.Core.DbContext
         public ApplicationDbContext(DbContextOptions options) : base(options)
         {
         }
+
+        public DbSet<Rooms> Rooms { get; set; }
     }
 }
